@@ -1,0 +1,32 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "global.d.ts",
+    "env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.json"
+  ],
+  "exclude": ["src/**/__tests__/*", "node_modules", "dist"],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "typeRoots": ["./src", "./node_modules/@types"],
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "emitDeclarationOnly": true,
+    "paths": {
+      "@/*": ["src/*"],
+      "~/*": ["public/*"]
+    },
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "composite": true,
+    "preserveSymlinks": true,
+    "allowSyntheticDefaultImports": true
+  }
+}
