@@ -4,7 +4,7 @@ This is a smallest WYSIWYG-library for Vue 3 you can find.
   
   
 ## Installation  
-This package is not available on npmjs.org, but you can add this link git+ssh://git@github.com/ivkoandrv/vut-tinytyper.git as a dependency named vue-tinytyper in your package.json file.  
+This package is not available on npmjs.org, but you can add this link `git+ssh://git@github.com/ivkoandrv/vut-tinytyper.git` as a dependency named vue-tinytyper in your package.json file.  
   
 ## Usage  
   
