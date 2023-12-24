@@ -1,3 +1,5 @@
 import TinyTyperBase from '../components/TinyTyperBase.vue';
 import TinyTyperToolbar from '../components/TinyTyperToolbar.vue';
-export { TinyTyperBase, TinyTyperToolbar };
+import TinyTyperToolbarNavItem from '../components/TinyTyperToolbarNavItem.vue';
+import TinyTyperIcon from '../components/TinyTyperIcon.vue';
+export { TinyTyperBase, TinyTyperToolbar, TinyTyperToolbarNavItem, TinyTyperIcon };

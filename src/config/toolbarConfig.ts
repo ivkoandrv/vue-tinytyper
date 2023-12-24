@@ -8,14 +8,14 @@ const toolbarItems : ToolbarGroup[] = [
         id: 'undo',
         order: 0,
         name: "Undo",
-        icon: "icon-undo",
+        icon: "action-undo",
         functionName: "undoRedo"
       },
       {
         id: 'redo',
         order: 1,
         name: "Redo",
-        icon: "icon-redo",
+        icon: "action-redo",
         functionName: "undoRedo"
       }
     ]
@@ -27,28 +27,28 @@ const toolbarItems : ToolbarGroup[] = [
         id: 'bold',
         order: 0,
         name: "Bold",
-        icon: "icon-bold",
+        icon: "format-bold",
         functionName: "toggleFormat"
       },
       {
         id: 'italic',
         order: 1,
         name: "Italic",
-        icon: "icon-italic",
+        icon: "format-italic",
         functionName: "toggleFormat"
       },
       {
         id: 'strikeThrough',
         order: 2,
         name: "Strike",
-        icon: "icon-strike",
+        icon: "format-strike",
         functionName: "toggleFormat"
       },
       {
         id: 'underline',
         order: 3,
         name: "Underline",
-        icon: "icon-underline",
+        icon: "format-underline",
         functionName: "toggleFormat"
       },
     ]

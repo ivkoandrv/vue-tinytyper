@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { inject } from "vue";
 import type { useTinyTyperComposable } from "@/TinyTyper";
+import TinyTyperToolbarNavItem from "@/components/TinyTyperToolbarNavItem.vue";
 
 const { getToolBarItems, callFunction } = inject("tinyTyper") as useTinyTyperComposable;
+
 </script>
 
 <template>
@@ -14,7 +16,7 @@ const { getToolBarItems, callFunction } = inject("tinyTyper") as useTinyTyperCom
         :key="navGroup.order"
       >
         <li v-for="navGroupItem of navGroup.toolbarItems" :key="navGroupItem.order">
-          <button @click="callFunction(navGroupItem.functionName, navGroupItem.id)">{{navGroupItem.name}}</button>
+            <tiny-typer-toolbar-nav-item :item="navGroupItem" @click="callFunction(navGroupItem.functionName, navGroupItem.id)"></tiny-typer-toolbar-nav-item>
         </li>
       </ul>
     </div>
