@@ -1,3 +1,4 @@
+import icons from "@/config/icons.json"
 import type { ComputedRef, Ref } from "vue";
 export type useTinyTyperInstances = useTinyTyperComposableParams
 
@@ -26,6 +27,10 @@ export interface useTinyTyperComposable {
   handleEnterKey: (event: KeyboardEvent) => void
   setEditorRef: () => void
   getContent: () => string
+  isFormatActive: (format: string) => boolean
+  // saveSelection: () => void
+  // getContentEditor: () => HTMLElement | null
+  // updateContent: () => void
 }
 
 export interface useTinyTyperComposableParams {
@@ -37,4 +42,22 @@ export interface useTinyTyperComposableParams {
 export interface tinyTyperUtilFunctions {
   undoRedo: (action: ("undo" | "redo")) => void;
   toggleFormat: (format: string) => void
+}
+
+export interface TinyTyperIconProps {
+  icon: string
+  size: string
+  color?: string
+}
+
+export type IconKey = keyof typeof icons;
+
+export interface TinyTyperToolbarNavItemProps {
+  item: ToolbarNavItem,
+  showLabel?: boolean | false
+}
+
+export interface TinyTyperBaseEmits {
+  (e: "onInput", data: string): void;
+  (e: "onFocusOut", data: string): void;
 }

@@ -10,6 +10,7 @@
       :innerHTML="content"
       @mousedown="tinyTyper.setEditorRef"
     ></div>
+
     <div class="tiny-typer-footer">
       <span class="tiny-typer-copyright">TinyTyper</span>
     </div>
@@ -20,13 +21,11 @@
 import { provide, ref } from "vue";
 import { useTinyTyper } from "@/composables";
 import TinyTyperToolbar from "@/components/TinyTyperToolbar.vue";
+import type { TinyTyperBaseEmits } from "@/TinyTyper";
 
 const content = ref<string>("");
 const editorRef = ref<HTMLDivElement | null>(null);
-const emit = defineEmits<{
-  (e: "onInput", data: string): void;
-  (e: "onFocusOut", data: string): void;
-}>();
+const emit = defineEmits<TinyTyperBaseEmits>();
 
 const tinyTyper = useTinyTyper({ content, editorRef });
 

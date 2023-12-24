@@ -1,6 +1,11 @@
 @import 'variables';
 
 .tiny-typer{
+  &-icon{
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: currentColor;
+  }
   span{
     color: var(--black) !important;
   }
@@ -32,11 +37,49 @@
         all: unset;
         list-style-type: none;
         display: inline-flex;
-        gap: 1rem;
+        gap: .5rem;
+
+
 
 
         span{
           color: var(--black);
+        }
+
+        &-action{
+          all: unset;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: .5rem;
+          cursor: pointer;
+          padding: .5rem;
+          transition: .3s;
+          border-radius: .5rem;
+          &.active{
+            background: var(--primary);
+            svg{
+              fill: var(--white);
+              transition: .3s;
+            }
+          }
+          &:hover{
+            background: var(--primary-80);
+
+            svg{
+              fill: var(--white);
+              transition: .3s;
+            }
+          }
+          &:active{
+            background: var(--primary);
+
+            svg{
+              fill: var(--white);
+              transition: .3s;
+
+            }
+          }
         }
       }
     }

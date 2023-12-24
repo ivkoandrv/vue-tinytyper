@@ -22,6 +22,7 @@ export function useTinyTyper({
   editorRef,
 }: useTinyTyperComposableParams): useTinyTyperComposable {
 
+  const savedSelection: Range | null = null;
 
   const getToolBarItems: ComputedRef<ToolbarGroup[]> = computed(
     () => toolbarItems,
@@ -43,7 +44,7 @@ export function useTinyTyper({
 
     if (editor) {
       const range = document.createRange();
-      const selection = document.getSelection();
+      const selection = window.getSelection();
       range.selectNodeContents(editor);
       range.collapse(false);
       selection?.removeAllRanges();
@@ -66,6 +67,14 @@ export function useTinyTyper({
     }
   };
 
+  const isFormatActive = (format: string) : boolean => {
+    const isActive : ComputedRef<boolean> = computed(() => document.queryCommandState(format))
+
+    console.log('isFormatActive: ', format, isActive.value)
+
+    return isActive.value
+  }
+
   return {
     getToolBarItems,
     getInstances,
@@ -73,5 +82,7 @@ export function useTinyTyper({
     setEditorRef,
     callFunction,
     getContent,
+    isFormatActive,
+
   };
 }
