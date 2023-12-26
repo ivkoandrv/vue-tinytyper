@@ -1,5 +1,5 @@
 <template>
-  <div class="tiny-typer-wrapper">
+  <div class="tiny-typer tiny-typer-wrapper">
     <tiny-typer-toolbar></tiny-typer-toolbar>
     <tiny-typer-floating-bar
       :config="floatingBarOptions"

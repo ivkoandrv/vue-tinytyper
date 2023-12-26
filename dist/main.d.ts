@@ -4,4 +4,4 @@ declare const _default: {
     install: typeof install;
 };
 export default _default;
-export * from './components';
+export * from "./components";

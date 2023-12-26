@@ -1,5 +1,22 @@
 import icons from "@/config/icons.json";
 import type { ComputedRef, Ref } from "vue";
+
+export interface useTinyTyperComposable {
+  getToolBarItems: ComputedRef<ToolbarGroup[]>;
+  getFloatingToolbarItems: ComputedRef<ToolbarGroup>;
+  getInstances: ComputedRef<useTinyTyperInstances>;
+  callFunction: (functionName: string, actionId: string) => void;
+  handleEnterKey: (event: KeyboardEvent) => void;
+  setEditorRef: () => void;
+  getContent: () => string;
+  isFormatActive: (format: string) => boolean;
+  handleMouseUp: () => void;
+  updateSelection: () => void;
+  floatingBarOptions: Ref<TinyTyperFloatingParameters>;
+  selectionRect: Ref<DOMRect | null>;
+  inputData: Ref<string>;
+}
+
 export type useTinyTyperInstances = useTinyTyperComposableParams;
 
 export interface TinyTyperBaseProps {
@@ -20,21 +37,7 @@ export interface ToolbarGroup {
   toolbarItems: ToolbarNavItem[];
 }
 
-export interface useTinyTyperComposable {
-  getToolBarItems: ComputedRef<ToolbarGroup[]>;
-  getFloatingToolbarItems: ComputedRef<ToolbarGroup>;
-  getInstances: ComputedRef<useTinyTyperInstances>;
-  callFunction: (functionName: string, actionId: string) => void;
-  handleEnterKey: (event: KeyboardEvent) => void;
-  setEditorRef: () => void;
-  getContent: () => string;
-  isFormatActive: (format: string) => boolean;
-  handleMouseUp: () => void;
-  updateSelection: () => void;
-  floatingBarOptions: Ref<TinyTyperFloatingParameters>;
-  selectionRect: Ref<DOMRect | null>;
-  inputData: Ref<string>;
-}
+
 
 export interface useTinyTyperComposableParams {
   content: Ref<string>;

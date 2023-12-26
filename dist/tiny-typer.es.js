@@ -80,7 +80,9 @@ function Q({
   }, d = H(() => ({
     content: r,
     editorRef: i
-  })), b = H(() => K), T = () => {
+  })), b = H(
+    () => K
+  ), T = () => {
     const o = i.value;
     if (o) {
       const p = document.createRange(), y = window.getSelection();
@@ -91,7 +93,9 @@ function Q({
     i.value = document.querySelector(J);
   }, m = (o) => {
     o.key === "Enter" && (o.preventDefault(), document.execCommand("insertHTML", !1, "<br><br>"));
-  }, I = (o) => H(() => document.queryCommandState(o)).value, M = j(() => {
+  }, I = (o) => H(
+    () => document.queryCommandState(o)
+  ).value, M = j(() => {
     var p, y;
     const o = window.getSelection();
     if (o && o.rangeCount > 0) {
@@ -146,7 +150,9 @@ const W = {
     color: {}
   },
   setup(r) {
-    const i = r, t = H(() => W[`tt-${i.icon}`]);
+    const i = r, t = H(
+      () => W[`tt-${i.icon}`]
+    );
     return (c, a) => (l(), C("svg", Y, [
       f("path", { d: t.value }, null, 8, G)
     ]));
@@ -188,7 +194,9 @@ const W = {
 }), e1 = { class: "tiny-typer-toolbar" }, n1 = { class: "tiny-typer-toolbar-nav" }, N = /* @__PURE__ */ g({
   __name: "TinyTyperToolbar",
   setup(r) {
-    const { getToolBarItems: i, callFunction: t } = E("tinyTyper");
+    const { getToolBarItems: i, callFunction: t } = E(
+      "tinyTyper"
+    );
     return (c, a) => (l(), C("div", e1, [
       f("div", n1, [
         (l(!0), C(v, null, Z(s(i), (e) => (l(), C("ul", {
@@ -213,7 +221,9 @@ const W = {
     config: {}
   },
   setup(r) {
-    const { getFloatingToolbarItems: i, callFunction: t } = E("tinyTyper"), c = r;
+    const { getFloatingToolbarItems: i, callFunction: t } = E(
+      "tinyTyper"
+    ), c = r;
     return (a, e) => c.config.isSelected ? (l(), C("div", {
       key: 0,
       class: "tiny-typer-floating-bar",
@@ -231,7 +241,7 @@ const W = {
       ])
     ], 4)) : k("", !0);
   }
-}), i1 = { class: "tiny-typer-wrapper" }, r1 = ["innerHTML"], c1 = /* @__PURE__ */ f("div", { class: "tiny-typer-footer" }, [
+}), i1 = { class: "tiny-typer tiny-typer-wrapper" }, r1 = ["innerHTML"], c1 = /* @__PURE__ */ f("div", { class: "tiny-typer-footer" }, [
   /* @__PURE__ */ f("span", { class: "tiny-typer-copyright" }, "TinyTyper")
 ], -1), a1 = /* @__PURE__ */ g({
   __name: "TinyTyperBase",

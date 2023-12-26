@@ -96,16 +96,16 @@ export function useTinyTyper({
   Handle Enter (create new line)
    */
 
-  const handleEnterKey = (event: KeyboardEvent): void => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      document.execCommand("insertHTML", false, "<br><br>");
-    }
-  };
+    const handleEnterKey = (event: KeyboardEvent): void => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.execCommand("insertHTML", false, "<br><br>");
+        }
+    };
 
-  /*
-  Check if format is active
-   */
+    /*
+    Check if format is active
+     */
   const isFormatActive = (format: string): boolean => {
     const isActive: ComputedRef<boolean> = computed(() =>
       document.queryCommandState(format),
