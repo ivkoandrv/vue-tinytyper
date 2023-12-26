@@ -5,20 +5,16 @@
 </template>
 
 <script setup lang="ts">
-  import type { ComputedRef } from "vue";
-  import { computed } from "vue";
-  import icons from "@/config/icons.json"
-  import type { TinyTyperIconProps, IconKey } from "@/TinyTyper";
+import type { ComputedRef } from "vue";
+import { computed } from "vue";
+import icons from "@/config/icons.json";
+import type { TinyTyperIconProps, IconKey } from "@/TinyTyper";
 
+const props = defineProps<TinyTyperIconProps>();
 
-  const props = defineProps<TinyTyperIconProps>()
-
-
-
-  const getPath: ComputedRef<string> = computed(() => icons[`tt-${props.icon}` as IconKey]);
-
+const getPath: ComputedRef<string> = computed(
+  () => icons[`tt-${props.icon}` as IconKey],
+);
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

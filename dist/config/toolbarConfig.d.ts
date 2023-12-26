@@ -1,3 +1,3 @@
 import { ToolbarGroup } from '../TinyTyper';
-declare const toolbarItems: ToolbarGroup[];
-export default toolbarItems;
+export declare const toolbarItems: ToolbarGroup[];
+export declare const floatingFormatters: ToolbarGroup;

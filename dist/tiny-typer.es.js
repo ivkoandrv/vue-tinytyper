@@ -1,5 +1,5 @@
-import { computed as L, defineComponent as H, openBlock as a, createElementBlock as s, createElementVNode as y, inject as v, ref as _, onMounted as V, onUnmounted as h, normalizeClass as I, createVNode as f, toDisplayString as k, createCommentVNode as N, Fragment as T, renderList as M, unref as u, provide as F, withKeys as S, withModifiers as w, pushScopeId as E, popScopeId as x } from "vue";
-const R = [
+import { ref as L, computed as H, onMounted as S, onBeforeUnmount as w, defineComponent as g, openBlock as l, createElementBlock as C, createElementVNode as f, onUnmounted as $, normalizeClass as x, createVNode as _, toDisplayString as U, createCommentVNode as k, inject as E, Fragment as v, renderList as Z, unref as s, normalizeStyle as R, provide as O, withKeys as D, withModifiers as z } from "vue";
+const B = [
   {
     order: 0,
     toolbarItems: [
@@ -8,14 +8,14 @@ const R = [
         order: 0,
         name: "Undo",
         icon: "action-undo",
-        functionName: "undoRedo"
+        functionName: "callAction"
       },
       {
         id: "redo",
         order: 1,
         name: "Redo",
         icon: "action-redo",
-        functionName: "undoRedo"
+        functionName: "callAction"
       }
     ]
   },
@@ -27,76 +27,106 @@ const R = [
         order: 0,
         name: "Bold",
         icon: "format-bold",
-        functionName: "toggleFormat"
+        functionName: "callAction"
       },
       {
         id: "italic",
         order: 1,
         name: "Italic",
         icon: "format-italic",
-        functionName: "toggleFormat"
+        functionName: "callAction"
       },
       {
         id: "strikeThrough",
         order: 2,
         name: "Strike",
         icon: "format-strike",
-        functionName: "toggleFormat"
+        functionName: "callAction"
       },
       {
         id: "underline",
         order: 3,
         name: "Underline",
         icon: "format-underline",
-        functionName: "toggleFormat"
+        functionName: "callAction"
       }
     ]
   }
-], $ = {
-  toggleFormat: (t) => {
-    document.execCommand(t);
-  },
-  undoRedo: (t) => {
-    document.execCommand(t);
+], K = B[1], q = {
+  callAction: (r) => {
+    document.execCommand(r);
   }
 };
-function B({
-  content: t,
-  editorRef: o
-}) {
-  const e = L(
-    () => R
-  ), C = (n, l) => {
-    $[n](l);
-  }, c = L(() => ({
-    content: t,
-    editorRef: o
-  }));
-  return {
-    getToolBarItems: e,
-    getInstances: c,
-    handleEnterKey: (n) => {
-      n.key === "Enter" && (n.preventDefault(), document.execCommand("insertHTML", !1, "<br><br>"));
-    },
-    setEditorRef: () => {
-      o.value = document.querySelector(".tiny-typer-content");
-    },
-    callFunction: C,
-    getContent: () => {
-      const n = o.value;
-      if (n) {
-        const l = document.createRange(), m = window.getSelection();
-        return l.selectNodeContents(n), l.collapse(!1), m == null || m.removeAllRanges(), m == null || m.addRange(l), n == null ? void 0 : n.innerHTML;
-      }
-      return "";
-    },
-    isFormatActive: (n) => {
-      const l = L(() => document.queryCommandState(n));
-      return console.log("isFormatActive: ", n, l.value), l.value;
-    }
+function j(r, i) {
+  let t;
+  return function() {
+    const c = this, a = arguments;
+    clearTimeout(t), t = setTimeout(() => r.apply(c, a), i);
   };
 }
-const A = {
+const P = 100, X = 48, J = ".tiny-typer-content";
+function Q({
+  content: r,
+  editorRef: i
+}) {
+  const t = L(null), c = L(""), a = L({
+    left: 0,
+    top: 0,
+    isSelected: !1
+  }), e = H(
+    () => B
+  ), n = (o, p) => {
+    q[o](p);
+  }, d = H(() => ({
+    content: r,
+    editorRef: i
+  })), b = H(
+    () => K
+  ), T = () => {
+    const o = i.value;
+    if (o) {
+      const p = document.createRange(), y = window.getSelection();
+      return p.selectNodeContents(o), p.collapse(!1), y == null || y.removeAllRanges(), y == null || y.addRange(p), o == null ? void 0 : o.innerHTML;
+    }
+    return "";
+  }, u = () => {
+    i.value = document.querySelector(J);
+  }, m = (o) => {
+    o.key === "Enter" && (o.preventDefault(), document.execCommand("insertHTML", !1, "<br><br>"));
+  }, I = (o) => H(
+    () => document.queryCommandState(o)
+  ).value, M = j(() => {
+    var p, y;
+    const o = window.getSelection();
+    if (o && o.rangeCount > 0) {
+      const V = o.getRangeAt(0).getBoundingClientRect();
+      V && (t.value = V, a.value.top = ((p = t.value) == null ? void 0 : p.top) - X, a.value.left = (y = t.value) == null ? void 0 : y.left, a.value.isSelected = !!(o != null && o.toString().trim()));
+    }
+  }, P);
+  return S(() => {
+    document.addEventListener("selectionchange", M);
+  }), w(() => {
+    document.removeEventListener("selectionchange", M);
+  }), {
+    getToolBarItems: e,
+    getFloatingToolbarItems: b,
+    getInstances: d,
+    handleEnterKey: m,
+    setEditorRef: u,
+    callFunction: n,
+    getContent: T,
+    isFormatActive: I,
+    //updated data
+    handleMouseUp: () => {
+      M();
+    },
+    updateSelection: M,
+    floatingBarOptions: a,
+    selectionRect: t,
+    inputData: c
+  };
+}
+const W = {
   "tt-format-bold": "M15.25 11.8C15.7397 11.5018 16.1529 11.0934 16.4567 10.6073C16.7605 10.1212 16.9466 9.57077 17 9C17.0093 8.48388 16.9168 7.971 16.7278 7.49063C16.5388 7.01027 16.2571 6.57184 15.8986 6.20039C15.5402 5.82894 15.1121 5.53174 14.6387 5.32578C14.1654 5.11981 13.6561 5.00911 13.14 5H6.65002V19H13.65C14.1412 18.9948 14.6265 18.8929 15.0782 18.7001C15.53 18.5073 15.9394 18.2274 16.283 17.8764C16.6265 17.5253 16.8976 17.1101 17.0807 16.6543C17.2638 16.1985 17.3553 15.7112 17.35 15.22V15.1C17.3504 14.4071 17.1529 13.7285 16.781 13.144C16.409 12.5594 15.8778 12.0931 15.25 11.8ZM8.65002 7H12.85C13.2762 6.98681 13.6962 7.10428 14.0537 7.33665C14.4112 7.56902 14.6891 7.90517 14.85 8.3C15.0129 8.82779 14.9602 9.39859 14.7035 9.88765C14.4468 10.3767 14.0069 10.7443 13.48 10.91C13.2754 10.97 13.0632 11.0003 12.85 11H8.65002V7ZM13.25 17H8.65002V13H13.25C13.6762 12.9868 14.0962 13.1043 14.4537 13.3367C14.8112 13.569 15.0891 13.9052 15.25 14.3C15.4129 14.8278 15.3602 15.3986 15.1035 15.8877C14.8468 16.3767 14.4069 16.7443 13.88 16.91C13.6754 16.97 13.4632 17.0003 13.25 17Z",
   "tt-format-italic": "M11.76 9H13.76L11.56 19H9.56L11.76 9ZM13.44 5C13.2422 5 13.0489 5.05865 12.8844 5.16853C12.72 5.27841 12.5918 5.43459 12.5161 5.61732C12.4404 5.80004 12.4206 6.00111 12.4592 6.19509C12.4978 6.38907 12.593 6.56725 12.7329 6.70711C12.8727 6.84696 13.0509 6.9422 13.2449 6.98079C13.4389 7.01937 13.64 6.99957 13.8227 6.92388C14.0054 6.84819 14.1616 6.72002 14.2715 6.55557C14.3813 6.39112 14.44 6.19778 14.44 6C14.44 5.73478 14.3346 5.48043 14.1471 5.29289C13.9596 5.10536 13.7052 5 13.44 5Z",
   "tt-format-underline": "M19 20V22H5V20H19ZM16 13.215C15.9671 13.875 15.7711 14.5165 15.4297 15.0823C15.0883 15.6481 14.6121 16.1205 14.0435 16.4572C13.475 16.794 12.8318 16.9847 12.1716 17.0122C11.5114 17.0397 10.8546 16.9033 10.26 16.615C9.57464 16.3185 8.99341 15.8241 8.59077 15.1952C8.18813 14.5663 7.98242 13.8315 8 13.085V5.005H6V13.215C6.03383 14.1564 6.28885 15.0766 6.74442 15.9012C7.19998 16.7257 7.84329 17.4314 8.62227 17.9611C9.40125 18.4908 10.294 18.8296 11.2283 18.9502C12.1625 19.0707 13.1121 18.9696 14 18.655C15.1811 18.2613 16.2059 17.5012 16.9252 16.485C17.6446 15.4689 18.0211 14.2498 18 13.005V5.005H16V13.215ZM16 5H18H16ZM8 5H6H8Z",
@@ -108,132 +138,163 @@ const A = {
   "tt-format-more": "M13.55 19H15.55L10.55 5H8.55005L3.55005 19H5.55005L6.95005 15H12.05L13.55 19ZM7.65005 13L9.55005 7.8L11.45 13H7.65005ZM20.4501 17.5C20.4501 17.7967 20.3621 18.0867 20.1973 18.3334C20.0324 18.58 19.7982 18.7723 19.5241 18.8858C19.25 18.9993 18.9484 19.0291 18.6574 18.9712C18.3664 18.9133 18.0992 18.7704 17.8894 18.5607C17.6796 18.3509 17.5367 18.0836 17.4789 17.7926C17.421 17.5017 17.4507 17.2001 17.5642 16.926C17.6778 16.6519 17.87 16.4176 18.1167 16.2528C18.3634 16.088 18.6534 16 18.95 16C19.3479 16 19.7294 16.158 20.0107 16.4393C20.292 16.7206 20.4501 17.1022 20.4501 17.5ZM20.4501 13.5C20.4501 13.7967 20.3621 14.0867 20.1973 14.3334C20.0324 14.58 19.7982 14.7723 19.5241 14.8858C19.25 14.9994 18.9484 15.0291 18.6574 14.9712C18.3664 14.9133 18.0992 14.7704 17.8894 14.5607C17.6796 14.3509 17.5367 14.0836 17.4789 13.7926C17.421 13.5017 17.4507 13.2001 17.5642 12.926C17.6778 12.6519 17.87 12.4176 18.1167 12.2528C18.3634 12.088 18.6534 12 18.95 12C19.3479 12 19.7294 12.158 20.0107 12.4393C20.292 12.7206 20.4501 13.1022 20.4501 13.5ZM20.4501 9.5C20.4501 9.79667 20.3621 10.0867 20.1973 10.3334C20.0324 10.58 19.7982 10.7723 19.5241 10.8858C19.25 10.9994 18.9484 11.0291 18.6574 10.9712C18.3664 10.9133 18.0992 10.7704 17.8894 10.5607C17.6796 10.3509 17.5367 10.0836 17.4789 9.79264C17.421 9.50166 17.4507 9.20006 17.5642 8.92597C17.6778 8.65189 17.87 8.41762 18.1167 8.2528C18.3634 8.08797 18.6534 8 18.95 8C19.3479 8 19.7294 8.15804 20.0107 8.43934C20.292 8.72064 20.4501 9.10218 20.4501 9.5Z",
   "tt-action-undo": "M10.4 9.4C8.7 9.7 7.2 10.3 5.8 11.4L3 8.5V15.5H10L7.3 12.8C11 10.2 16.1 11 18.8 14.7C19 15 19.2 15.2 19.3 15.5L21.1 14.6C18.9 10.8 14.7 8.7 10.4 9.4Z",
   "tt-action-redo": "M13.6 9.4C15.3 9.7 16.8 10.3 18.2 11.4L21 8.5V15.5H14L16.7 12.8C13 10.1 7.9 11 5.3 14.7C5.1 15 4.9 15.2 4.8 15.5L3 14.6C5.1 10.8 9.3 8.7 13.6 9.4Z"
-}, K = {
+}, Y = {
   viewBox: "0 0 24 24",
   class: "tiny-typer-icon",
   role: "img"
-}, z = ["d"], b = /* @__PURE__ */ H({
+}, G = ["d"], F = /* @__PURE__ */ g({
   __name: "TinyTyperIcon",
   props: {
     icon: {},
     size: {},
     color: {}
   },
-  setup(t) {
-    const o = t, e = L(() => A[`tt-${o.icon}`]);
-    return (C, c) => (a(), s("svg", K, [
-      y("path", { d: e.value }, null, 8, z)
+  setup(r) {
+    const i = r, t = H(
+      () => W[`tt-${i.icon}`]
+    );
+    return (c, a) => (l(), C("svg", Y, [
+      f("path", { d: t.value }, null, 8, G)
     ]));
   }
-}), O = { key: 0 }, g = /* @__PURE__ */ H({
+}), t1 = { key: 0 }, h = /* @__PURE__ */ g({
   __name: "TinyTyperToolbarNavItem",
   props: {
     item: {},
     showLabel: { type: Boolean }
   },
   emits: ["click"],
-  setup(t, { emit: o }) {
-    v("tinyTyper");
-    const e = t, C = _(document.queryCommandState(e.item.id)), c = o, i = (r) => {
-      c("click", r);
+  setup(r, { emit: i }) {
+    const t = r, c = L(document.queryCommandState(t.item.id)), a = i, e = (n) => {
+      a("click", n);
     };
-    return V(() => {
-      const r = () => {
-        C.value = document.queryCommandState(e.item.id);
+    return S(() => {
+      const n = () => {
+        c.value = document.queryCommandState(t.item.id);
       };
-      r();
-      const d = new MutationObserver(r);
+      n();
+      const d = new MutationObserver(n);
       d.observe(document.body, {
         attributes: !0,
         subtree: !0
-      }), h(() => {
+      }), $(() => {
         d.disconnect();
       });
-    }), (r, d) => (a(), s("button", {
-      class: I(["tiny-typer-toolbar-nav-item-action", { active: C.value }]),
-      onClick: i
+    }), (n, d) => (l(), C("button", {
+      class: x(["tiny-typer-toolbar-nav-item-action", { active: c.value }]),
+      onClick: e
     }, [
-      f(b, {
+      _(F, {
         size: "medium",
-        icon: e.item.icon
+        icon: t.item.icon
       }, null, 8, ["icon"]),
-      e.showLabel ? (a(), s("span", O, k(e.item.name), 1)) : N("", !0)
+      t.showLabel ? (l(), C("span", t1, U(t.item.name), 1)) : k("", !0)
     ], 2));
   }
-}), q = { class: "tiny-typer-toolbar" }, j = { class: "tiny-typer-toolbar-nav" }, Z = /* @__PURE__ */ H({
+}), e1 = { class: "tiny-typer-toolbar" }, n1 = { class: "tiny-typer-toolbar-nav" }, N = /* @__PURE__ */ g({
   __name: "TinyTyperToolbar",
-  setup(t) {
-    const { getToolBarItems: o, callFunction: e } = v("tinyTyper");
-    return (C, c) => (a(), s("div", q, [
-      y("div", j, [
-        (a(!0), s(T, null, M(u(o), (i) => (a(), s("ul", {
+  setup(r) {
+    const { getToolBarItems: i, callFunction: t } = E(
+      "tinyTyper"
+    );
+    return (c, a) => (l(), C("div", e1, [
+      f("div", n1, [
+        (l(!0), C(v, null, Z(s(i), (e) => (l(), C("ul", {
           class: "tiny-typer-toolbar-nav-item",
-          key: i.order
+          key: e.order
         }, [
-          (a(!0), s(T, null, M(i.toolbarItems, (r) => (a(), s("li", {
-            key: r.order
+          (l(!0), C(v, null, Z(e.toolbarItems, (n) => (l(), C("li", {
+            key: n.order
           }, [
-            f(g, {
-              item: r,
-              onClick: (d) => u(e)(r.functionName, r.id)
+            _(h, {
+              item: n,
+              onClick: (d) => s(t)(n.functionName, n.id)
             }, null, 8, ["item", "onClick"])
           ]))), 128))
         ]))), 128))
       ])
     ]));
   }
-}), U = (t) => (E("data-v-3e515ada"), t = t(), x(), t), D = { class: "tiny-typer-wrapper" }, P = ["innerHTML"], J = /* @__PURE__ */ U(() => /* @__PURE__ */ y("div", { class: "tiny-typer-footer" }, [
-  /* @__PURE__ */ y("span", { class: "tiny-typer-copyright" }, "TinyTyper")
-], -1)), Q = /* @__PURE__ */ H({
+}), o1 = { class: "tiny-typer-toolbar-nav-item" }, A = /* @__PURE__ */ g({
+  __name: "TinyTyperFloatingBar",
+  props: {
+    config: {}
+  },
+  setup(r) {
+    const { getFloatingToolbarItems: i, callFunction: t } = E(
+      "tinyTyper"
+    ), c = r;
+    return (a, e) => c.config.isSelected ? (l(), C("div", {
+      key: 0,
+      class: "tiny-typer-floating-bar",
+      style: R({ top: c.config.top + "px", left: c.config.left + "px" })
+    }, [
+      f("ul", o1, [
+        (l(!0), C(v, null, Z(s(i).toolbarItems, (n) => (l(), C("li", {
+          key: n.order
+        }, [
+          _(h, {
+            item: n,
+            onClick: (d) => s(t)(n.functionName, n.id)
+          }, null, 8, ["item", "onClick"])
+        ]))), 128))
+      ])
+    ], 4)) : k("", !0);
+  }
+}), i1 = { class: "tiny-typer tiny-typer-wrapper" }, r1 = ["innerHTML"], c1 = /* @__PURE__ */ f("div", { class: "tiny-typer-footer" }, [
+  /* @__PURE__ */ f("span", { class: "tiny-typer-copyright" }, "TinyTyper")
+], -1), a1 = /* @__PURE__ */ g({
   __name: "TinyTyperBase",
   emits: ["onInput", "onFocusOut"],
-  setup(t, { emit: o }) {
-    const e = _(""), C = _(null), c = o, i = B({ content: e, editorRef: C });
-    F("tinyTyper", i);
-    const r = () => {
-      const d = i.getContent();
-      c("onInput", d);
+  setup(r, { emit: i }) {
+    const t = L(""), c = L(null), a = i, e = Q({ content: t, editorRef: c });
+    O("tinyTyper", e);
+    const { inputData: n, floatingBarOptions: d } = e, b = () => {
+      const T = e.getContent();
+      n.value = T, a("onInput", T);
     };
-    return (d, p) => (a(), s("div", D, [
-      f(Z),
-      y("div", {
+    return (T, u) => (l(), C("div", i1, [
+      _(N),
+      _(A, { config: s(d) }, null, 8, ["config"]),
+      f("div", {
         id: "tinyTyperEditor",
         class: "tiny-typer-content",
         contenteditable: "true",
-        onInput: r,
-        onKeydown: p[0] || (p[0] = S(w(
+        onInput: b,
+        onKeydown: u[0] || (u[0] = D(z(
           //@ts-ignore
-          (...n) => u(i).handleEnterKey && u(i).handleEnterKey(...n),
+          (...m) => s(e).handleEnterKey && s(e).handleEnterKey(...m),
           ["prevent"]
         ), ["enter"])),
-        innerHTML: e.value,
-        onMousedown: p[1] || (p[1] = //@ts-ignore
-        (...n) => u(i).setEditorRef && u(i).setEditorRef(...n))
-      }, null, 40, P),
-      J
+        onMouseup: u[1] || (u[1] = //@ts-ignore
+        (...m) => s(e).handleMouseUp && s(e).handleMouseUp(...m)),
+        onSelectionchange: u[2] || (u[2] = //@ts-ignore
+        (...m) => s(e).updateSelection && s(e).updateSelection(...m)),
+        innerHTML: t.value,
+        onMousedown: u[3] || (u[3] = //@ts-ignore
+        (...m) => s(e).setEditorRef && s(e).setEditorRef(...m))
+      }, null, 40, r1),
+      c1
     ]));
   }
-}), W = (t, o) => {
-  const e = t.__vccOpts || t;
-  for (const [C, c] of o)
-    e[C] = c;
-  return e;
-}, X = /* @__PURE__ */ W(Q, [["__scopeId", "data-v-3e515ada"]]), Y = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}), s1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  TinyTyperBase: X,
-  TinyTyperIcon: b,
-  TinyTyperToolbar: Z,
-  TinyTyperToolbarNavItem: g
+  TinyTyperBase: a1,
+  TinyTyperFloatingBar: A,
+  TinyTyperIcon: F,
+  TinyTyperToolbar: N,
+  TinyTyperToolbarNavItem: h
 }, Symbol.toStringTag, { value: "Module" }));
-function G(t) {
-  for (const o in Y)
-    (void 0)(o);
+function l1(r) {
+  for (const i in s1)
+    (void 0)(i);
 }
-const e1 = { install: G };
+const m1 = { install: l1 };
 export {
-  X as TinyTyperBase,
-  b as TinyTyperIcon,
-  Z as TinyTyperToolbar,
-  g as TinyTyperToolbarNavItem,
-  e1 as default
+  a1 as TinyTyperBase,
+  A as TinyTyperFloatingBar,
+  F as TinyTyperIcon,
+  N as TinyTyperToolbar,
+  h as TinyTyperToolbarNavItem,
+  m1 as default
 };

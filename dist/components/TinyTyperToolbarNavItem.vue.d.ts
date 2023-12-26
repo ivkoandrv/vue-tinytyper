@@ -1,5 +1,4 @@
 import { Ref } from "vue";
-import type { ComputedRef } from "vue";
 declare const _sfc_main: import("vue").DefineComponent<{
     item: {
         type: ObjectConstructor;
@@ -10,7 +9,6 @@ declare const _sfc_main: import("vue").DefineComponent<{
         required: false;
     };
 }, {
-    isFormatActive: (format: string) => boolean;
     props: any;
     isActive: Ref<boolean>;
     emit: (event: "click", ...args: any[]) => void;
@@ -30,7 +28,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         };
     }, {
         props: any;
-        getPath: ComputedRef<string>;
+        getPath: import("vue").ComputedRef<string>;
     }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
         icon: {
             type: StringConstructor;

@@ -5,15 +5,15 @@ import { computed, inject, onMounted, onUnmounted, Ref, ref, watch } from "vue";
 
 // const { isFormatActive } = inject("tinyTyper") as useTinyTyperComposable;
 
-const props = defineProps<TinyTyperToolbarNavItemProps>()
+const props = defineProps<TinyTyperToolbarNavItemProps>();
 
 const isActive: Ref<boolean> = ref(document.queryCommandState(props.item.id));
 
 const emit = defineEmits(["click"]);
 
-const onClick = (data: Event ) : void => {
-  emit('click', data)
-}
+const onClick = (data: Event): void => {
+  emit("click", data);
+};
 
 onMounted(() => {
   const updateState = () => {
@@ -33,16 +33,17 @@ onMounted(() => {
     observer.disconnect();
   });
 });
-
 </script>
 
 <template>
-  <button class="tiny-typer-toolbar-nav-item-action" :class="{'active' : isActive}" @click="onClick">
+  <button
+    class="tiny-typer-toolbar-nav-item-action"
+    :class="{ active: isActive }"
+    @click="onClick"
+  >
     <tiny-typer-icon size="medium" :icon="props.item.icon"></tiny-typer-icon>
-    <span v-if="props.showLabel">{{props.item.name}}</span>
+    <span v-if="props.showLabel">{{ props.item.name }}</span>
   </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
