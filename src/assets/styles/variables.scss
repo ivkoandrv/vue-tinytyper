@@ -1,9 +1,9 @@
-$primary-color: 43,96,197;
+$primary-color: 43, 96, 197;
 
-:root{
-  --white: rgba(255,255,255,1);
-  --black: rgba(0,0,0,1);
-  --grey: rgba(242,242,242,1);
+:root {
+  --white: rgba(255, 255, 255, 1);
+  --black: rgba(0, 0, 0, 1);
+  --grey: rgba(242, 242, 242, 1);
   --primary: rgba(#{$primary-color}, 1);
   --primary-80: rgba(#{$primary-color}, 0.8);
 }

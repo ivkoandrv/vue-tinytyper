@@ -18,12 +18,18 @@ export interface ToolbarGroup {
 }
 export interface useTinyTyperComposable {
     getToolBarItems: ComputedRef<ToolbarGroup[]>;
+    getFloatingToolbarItems: ComputedRef<ToolbarGroup>;
     getInstances: ComputedRef<useTinyTyperInstances>;
     callFunction: (functionName: string, actionId: string) => void;
     handleEnterKey: (event: KeyboardEvent) => void;
     setEditorRef: () => void;
     getContent: () => string;
     isFormatActive: (format: string) => boolean;
+    handleMouseUp: () => void;
+    updateSelection: () => void;
+    floatingBarOptions: Ref<TinyTyperFloatingParameters>;
+    selectionRect: Ref<DOMRect | null>;
+    inputData: Ref<string>;
 }
 export interface useTinyTyperComposableParams {
     content: Ref<string>;
@@ -43,3 +49,15 @@ export interface TinyTyperToolbarNavItemProps {
     item: ToolbarNavItem;
     showLabel?: boolean | false;
 }
+export interface TinyTyperBaseEmits {
+    (e: "onInput", data: string): void;
+    (e: "onFocusOut", data: string): void;
+}
+export interface TinyTyperFloatingParameters {
+    left: number;
+    top: number;
+    isSelected: boolean;
+}
+export type tinyTyperUtilFunction = {
+    [key: string]: (action: string) => void;
+};

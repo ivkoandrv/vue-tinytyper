@@ -1,6 +1,12 @@
-declare const _sfc_main: import("vue").DefineComponent<{}, {
-    getToolBarItems: import("vue").ComputedRef<import('../TinyTyper').ToolbarGroup[]>;
+declare const _sfc_main: import("vue").DefineComponent<{
+    config: {
+        type: ObjectConstructor;
+        required: true;
+    };
+}, {
+    getFloatingToolbarItems: import("vue").ComputedRef<import('../TinyTyper').ToolbarGroup>;
     callFunction: (functionName: string, actionId: string) => void;
+    props: any;
     TinyTyperToolbarNavItem: import("vue").DefineComponent<{
         item: {
             type: ObjectConstructor;
@@ -59,5 +65,10 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
     }, {
         showLabel: boolean;
     }, {}>;
-}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>>, {}, {}>;
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    config: {
+        type: ObjectConstructor;
+        required: true;
+    };
+}>>, {}, {}>;
 export default _sfc_main;
